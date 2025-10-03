@@ -1,7 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
+
 const authRouters = require('./routes/auth');
+const errorHandler = require('./middleware/errorHandler');
 
 
 require("dotenv").config();
@@ -9,6 +11,7 @@ require("dotenv").config();
 const app = express();
 app.use(bodyParser.json());
 app.use('/api/auth', authRouters);
+app.use(errorHandler);
 
 mongoose
     .connect(process.env.MONGO_URL, { 
