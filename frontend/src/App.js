@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
 import { AuthProvider, AuthContext } from './AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -28,7 +29,10 @@ function Navbar() {
               <Link className="btn btn-primary" to="/signup">Signup</Link>
             </>
           ) : (
-            <button onClick={logout} className="btn btn-danger">Logout</button>
+             <>
+              <Link className="btn btn-outline-light me-2" to="/dashboard">Dashboard</Link>
+              <button onClick={logout} className="btn btn-danger">Logout</button>
+            </>
           )}
         </div>
       </div>
@@ -43,7 +47,22 @@ function AppInner() {
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+        <Route path="/" 
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          } 
+        />
+
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </>
   );
