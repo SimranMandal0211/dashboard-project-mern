@@ -1,25 +1,60 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
+import { AuthProvider, AuthContext } from './AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-function App() {
+function Home() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container mt-5">
+      <h1>Home (protected)</h1>
+      <p>Welcome to the app. This page is protected.</p>
     </div>
   );
 }
 
-export default App;
+function Navbar() {
+  const { user, logout } = useContext(AuthContext);
+  return (
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div className="container">
+        <Link className="navbar-brand" to="/">MyApp</Link>
+        <div>
+          {!user ? (
+            <>
+              <Link className="btn btn-outline-light me-2" to="/login">Login</Link>
+              <Link className="btn btn-primary" to="/signup">Signup</Link>
+            </>
+          ) : (
+            <button onClick={logout} className="btn btn-danger">Logout</button>
+          )}
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+function AppInner() {
+  return (
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+      </Routes>
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <Router>
+        <AppInner />
+      </Router>
+    </AuthProvider>
+  );
+}
