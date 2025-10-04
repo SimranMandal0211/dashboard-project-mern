@@ -3,6 +3,10 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import CreatePost from './pages/CreatePost';
+import EditPost from './pages/EditPost';
+
+
 import { AuthProvider, AuthContext } from './AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -62,6 +66,24 @@ function AppInner() {
               <Dashboard />
             </ProtectedRoute>
           }
+        />
+
+        <Route 
+          path="/create-post" 
+          element={
+            <ProtectedRoute>
+              <CreatePost />
+            </ProtectedRoute>
+          } 
+        />
+      
+        <Route 
+          path="/edit-post/:id" 
+          element={
+            <ProtectedRoute>
+              <EditPost />
+            </ProtectedRoute>
+          } 
         />
       </Routes>
     </>
