@@ -29,13 +29,24 @@ function Navbar() {
         <div>
           {!user ? (
             <>
-              <Link className="btn btn-outline-light me-2" to="/login">Login</Link>
-              <Link className="btn btn-primary" to="/signup">Signup</Link>
+              <Link className="btn btn-outline-light me-2" to="/login">
+                Login
+              </Link>
+              <Link className="btn btn-primary" to="/signup">
+                Signup
+              </Link>
             </>
           ) : (
              <>
-              <Link className="btn btn-outline-light me-2" to="/dashboard">Dashboard</Link>
-              <button onClick={logout} className="btn btn-danger">Logout</button>
+              <span className="text-light me-3">
+                Hi, <strong>{user.name}</strong>
+              </span>
+              <Link className="btn btn-outline-light me-2" to="/dashboard">
+                Dashboard
+              </Link>
+              <button onClick={() => logout(true)} className="btn btn-danger">
+                Logout
+              </button>
             </>
           )}
         </div>
@@ -92,10 +103,10 @@ function AppInner() {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <Router>
+    <Router>
+      <AuthProvider>
         <AppInner />
-      </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </Router>
   );
 }

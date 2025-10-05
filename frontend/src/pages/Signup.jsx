@@ -39,7 +39,10 @@ export default function Signup(){
                 navigate('/login');
             }
         }catch(err){
-            setErrors({ server: err.response?.data?.message || 'Signup failed' });
+           console.error('Signup error:', err);
+            const msg = err.response?.data?.message || 'Signup failed. Try again.';
+        
+            setErrors({ server: msg });
         }finally{
             setBusy(false);
         }
@@ -49,27 +52,49 @@ export default function Signup(){
         <div className='container mt-5' style={{ maxWidth: 520 }}>
             <h2 className='mb-4'>Sign up</h2>
             {errors.server && <div className='alert alert-danger'>{errors.server}/</div>}
+
             <form onSubmit={handleSubmit} noValidate>
                 <div className='mb-3'>
                     <label className='form-label'>Name</label>
-                    <input name="name" value={form.name} onChange={handleChange} className={`form-control ${errors.name ? 'is-invalid' : ''}`} />
+                    <input 
+                        name="name" 
+                        value={form.name} 
+                        onChange={handleChange} 
+                        className={`form-control ${errors.name ? 'is-invalid' : ''}`} 
+                    />
                     <div className='invalid-feedback'>{errors.name}</div>
                 </div>
 
 
                  <div className="mb-3">
                     <label className="form-label">Email</label>
-                    <input type="email" name="email" value={form.email} onChange={handleChange} className={`form-control ${errors.email ? 'is-invalid' : ''}`} />
+                    <input 
+                        type="email"
+                        name="email"
+                        value={form.email}
+                        onChange={handleChange} 
+                        className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                     />
                     <div className="invalid-feedback">{errors.email}</div>
                 </div>
 
                 <div className="mb-3">
                     <label className="form-label">Password</label>
-                    <input type="password" name="password" value={form.password} onChange={handleChange} className={`form-control ${errors.password ? 'is-invalid' : ''}`} />
+                    <input 
+                        type="password"   
+                        name="password"
+                        value={form.password} 
+                        onChange={handleChange} 
+                        className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+                    />
                     <div className="invalid-feedback">{errors.password}</div>
                 </div>
 
-                <button className='btn btn-primary w-100' type='submit' disabled={busy}>
+                <button 
+                    lassName='btn btn-primary w-100' 
+                    type='submit' 
+                    disabled={busy}
+                >
                     {busy ? 'Signing up...' : 'Sign up'}
                 </button>
             </form>

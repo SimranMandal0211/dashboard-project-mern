@@ -14,6 +14,7 @@ app.use(bodyParser.json());
 app.use('/api/auth', authRouters);
 app.use(errorHandler);
 app.use('/api/posts', postRoutes);
+app.use("/api/user", userRoutes);
 
 mongoose
     .connect(process.env.MONGO_URL, { 
