@@ -91,7 +91,7 @@ export default function Signup(){
                 </div>
 
                 <button 
-                    lassName='btn btn-primary w-100' 
+                    className='btn btn-primary w-100' 
                     type='submit' 
                     disabled={busy}
                 >

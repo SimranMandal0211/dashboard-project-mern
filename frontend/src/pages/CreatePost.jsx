@@ -10,10 +10,18 @@ export default function CreatePost(){
     const handleSubmit = async(e) => {
         e.preventDefault();
 
+        const url = process.env.REACT_APP_URL;
+        const token = localStorage.getItem("token");
+
+        if(!url || !token){
+            console.error("Missing URL or token");
+            return;
+        }
+        
         try{
-            const token = localStorage.getItem("token");
+            // const token = localStorage.getItem("token");
             await axios.post(
-                `${process.env.REACT_APP_URL}/posts`,
+                `${url}/posts`,
                 { title, content },
                 {headers: { Authorization: `Bearer ${token}`}}
             );
